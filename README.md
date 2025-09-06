@@ -55,27 +55,22 @@ This project connects a **Twilio** phone number to a local **Python** server, st
 
 ```mermaid
 flowchart LR
-  A[Caller (Phone)]
-  B[Twilio Phone Number]
-  C[Your Python Server]
-  D[Deepgram Voice Agent API]
+    A[Caller (Phone)] -->|speaks/hears| B[Twilio Phone Number]
+    B -->|TwiML Start<Stream> (WSS)| C[Your Python Server]
+    C <--> |WSS| D[Deepgram Voice Agent API]
 
-  A -->|speaks/hears| B
-  B -->|TwiML &lt;Start&gt;&lt;Stream&gt; (WSS)| C
-  C <-->|WSS| D
+    subgraph "Your Python Server"
+        C1[Twilio Receiver<br/>(JSON "media" → bytes)]
+        C2[Audio Queue]
+        C3[Deepgram Sender<br/>(bytes → WSS)]
+        C4[Deepgram Receiver<br/>(TTS bytes ← WSS)]
+        C5[Function Executor<br/>(local Python)]
+    end
 
-  subgraph "Your Python Server"
-    C1[Twilio Receiver<br/>(JSON "media" → bytes)]
-    C2[Audio Queue]
-    C3[Deepgram Sender<br/>(bytes → WSS)]
-    C4[Deepgram Receiver<br/>(TTS bytes + events)]
-    C5[Function Executor<br/>(local Python)]
-  end
-
-  C1 --> C2 --> C3
-  C4 --> C5 --> D
-  C -->|JSON "media" (base64 TTS)| B
-  D -->|function_call.response| C
+    C1 --> C2 --> C3
+    C4 --> C5 --> D
+    C -->|JSON "media" (base64 TTS)| B
+    D -->|function_call.response| C
 ```
 
 
