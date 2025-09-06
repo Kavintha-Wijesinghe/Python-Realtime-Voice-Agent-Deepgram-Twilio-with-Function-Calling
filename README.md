@@ -90,7 +90,7 @@ sequenceDiagram
 sequenceDiagram
   participant User as Caller
   participant Twilio as Twilio Media Streams
-  participant App as Your Python Server
+  participant App as Python Server
   participant DG as Deepgram Voice Agent
 
   User->>Twilio: Dial phone number
