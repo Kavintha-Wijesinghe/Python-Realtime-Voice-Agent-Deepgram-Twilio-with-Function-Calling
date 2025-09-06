@@ -53,6 +53,7 @@ This project connects a **Twilio** phone number to a local **Python** server, st
 ## Architecture & Pipeline
 
 
+```mermaid
 flowchart LR
   A[Caller (Phone)] -- speaks/hears --> B[Twilio Phone Number]
   B -- TwiML <Start><Stream> (WSS) --> C[Your Python Server]
@@ -71,6 +72,7 @@ flowchart LR
   C4 --> C5
   C5 --> D
   C1 --> C2 --> C3
+```
 
 
 **Roles**
