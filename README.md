@@ -76,7 +76,6 @@ flowchart LR
   C4 --> C5 --> D
   C -->|JSON "media" (base64 TTS)| B
   D -->|function_call.response| C
-
 ```
 
 
